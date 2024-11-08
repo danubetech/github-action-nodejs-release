@@ -5,6 +5,8 @@ async function run() {
     try {
         const isTokenUndefined = core.getInput('github-token') === '';
         console.log('isTokenUndefined', isTokenUndefined);
+        const isReleaseTypeUndefined = core.getInput('release-type') === '';
+        console.log('isReleaseTypeUndefined', isReleaseTypeUndefined);
         const token = core.getInput('github-token', { required: true });
         const releaseType = core.getInput('release-type') || 'minor';
 
