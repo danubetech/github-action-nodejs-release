@@ -3,12 +3,8 @@ const { ReleaseManager } = require('./release-manager');
 
 async function run() {
     try {
-        const isTokenUndefined = core.getInput('github-token') === '';
-        console.log('isTokenUndefined', isTokenUndefined);
-        const isReleaseTypeUndefined = core.getInput('release-type') === '';
-        console.log('isReleaseTypeUndefined', isReleaseTypeUndefined);
-        const token = core.getInput('github-token', { required: true });
-        const releaseType = core.getInput('release-type') || 'minor';
+        const token = process.env.GITHUB_TOKEN;
+        const releaseType = process.env.RELEASE_TYPE || 'minor';
 
         if (!['major', 'minor', 'patch'].includes(releaseType)) {
             throw new Error('Invalid release type. Use: major, minor, or patch');
