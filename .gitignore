@@ -1,0 +1,104 @@
+# NodeJS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+*.tgz
+.env
+.env.test
+.env.production
+coverage/
+*.lcov
+.nyc_output/
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+jspm_packages/
+web_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+out/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/contentModel.xml
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+.history
+.ionide
+
+# GitHub
+.github/.DS_Store
+
+# Operating System
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Build output
+dist/
+build/
+lib/
+tmp/
+
+# Debug
+.debug/
+debug.log
+
+# Test
+/coverage
+/.nyc_output
+
+# Compiled binary addons
+build/Release
+
+# Optional typescript cache
+*.tsbuildinfo
+
+# Project specific
+package-lock.json  # if using npm
+yarn.lock         # if using yarn
+.pnp.*           # if using Plug'n'Play
+.vercel          # if using Vercel
+.next            # if using Next.js

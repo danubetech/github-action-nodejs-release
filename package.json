@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-release-action",
+  "version": "1.0.0",
+  "description": "GitHub Action for automating Node.js project releases",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint src/**/*.js"
+  },
+  "keywords": [
+    "github",
+    "action",
+    "release",
+    "version",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.14.0",
+    "jest": "^29.7.0"
+  }
+}
