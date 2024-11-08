@@ -20,5 +20,3 @@ async function run() {
 }
 
 run();
-
-// Return version number to workflow
