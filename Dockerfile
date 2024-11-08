@@ -9,7 +9,12 @@ RUN apt-get update && \
 WORKDIR /app
 COPY package*.json ./
 COPY src ./src
+COPY entrypoint.sh ./
 
+# Make entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
+
+# Install dependencies
 RUN npm ci --only=production
 
-ENTRYPOINT ["node", "/app/src/index.js"]
+ENTRYPOINT ["/app/entrypoint.sh"]
