@@ -1,16 +1,14 @@
 name: 'Node.js Release Manager'
 description: 'Automates version management and release process for Node.js projects'
+
 inputs:
-  github-token:
-    description: 'GitHub token for authentication'
-    required: true
   release-type:
     description: 'Type of release (major, minor, patch)'
     required: false
     default: 'minor'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    GITHUB_TOKEN: ${{ inputs.github-token }}
     RELEASE_TYPE: ${{ inputs.release-type }}

@@ -1,14 +1,8 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 const core = require('@actions/core');
-const github = require('@actions/github');
 
 class ReleaseManager {
-    constructor(githubToken) {
-        this.githubToken = githubToken;
-        this.octokit = github.getOctokit(githubToken);
-    }
-
     readPackageJson() {
         return JSON.parse(fs.readFileSync('package.json', 'utf8'));
     }
@@ -37,7 +31,7 @@ class ReleaseManager {
         execSync('git config user.email "action@github.com"');
     }
 
-    async createRelease(version) {
+    async createTag(version) {
         try {
             // Ensure working directory is clean
             execSync('git diff-index --quiet HEAD --');
@@ -46,22 +40,10 @@ class ReleaseManager {
             await this.configureGit();
 
             // Create and push tag
-            execSync(`git tag -a v${version} -m "Release version ${version}"`);
+            execSync(`git tag -a ${version} -m "ci: Release version ${version}"`);
             execSync('git push --tags');
 
-            // Create GitHub release
-            const { owner, repo } = github.context.repo;
-            await this.octokit.rest.repos.createRelease({
-                owner,
-                repo,
-                tag_name: `v${version}`,
-                name: `Release v${version}`,
-                body: `Release of version ${version}`,
-                draft: false,
-                prerelease: false
-            });
-
-            core.info(`Successfully created release v${version}`);
+            core.info(`Successfully created release ${version}`);
 
         } catch (error) {
             if (error.status === 1) {
@@ -83,7 +65,7 @@ class ReleaseManager {
             core.info(`New version will be: ${newVersion}`);
 
             // Create and push tag
-            await this.createRelease(newVersion);
+            await this.createTag(newVersion);
 
             // Update package.json with next version
             packageJson.version = newVersion;
