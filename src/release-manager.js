@@ -26,60 +26,36 @@ class ReleaseManager {
         }
     }
 
-    async configureGit() {
+    configureGit() {
         execSync('git config user.name "GitHub Action"');
         execSync('git config user.email "action@github.com"');
     }
 
-    async createTag(version) {
-        try {
-            // Ensure working directory is clean
-            execSync('git diff-index --quiet HEAD --');
-
-            // Configure git
-            await this.configureGit();
-
-            // Create and push tag
-            execSync(`git tag -a ${version} -m "ci: Release version ${version}"`);
-            execSync('git push --tags');
-
-            core.info(`Successfully created release ${version}`);
-
-        } catch (error) {
-            if (error.status === 1) {
-                throw new Error('Working directory is not clean. Please commit all changes first.');
-            }
-            throw error;
-        }
-    }
-
     async release(releaseType = 'minor') {
         try {
-            // Read current version
+            // 1. Read current version and increment it
             const packageJson = this.readPackageJson();
             const currentVersion = packageJson.version;
-            core.info(`Current version: ${currentVersion}`);
-
-            // Create new version
             const newVersion = this.incrementVersion(currentVersion, releaseType);
-            core.info(`New version will be: ${newVersion}`);
 
-            // Create and push tag
-            await this.createTag(newVersion);
+            core.info(`Incrementing version from ${currentVersion} to ${newVersion}`);
 
-            // Update package.json with next version
+            // 2. Update package.json with new version
             packageJson.version = newVersion;
             this.writePackageJson(packageJson);
 
-            // Commit package.json changes
+            core.info('Updated package.json with new version');
+
+            // 3. Commit and push changes
+            this.configureGit();
             execSync('git add package.json');
-            execSync(`git commit -m "Bump version to ${newVersion}"`);
+            execSync(`git commit -m "skip ci: increment version to ${newVersion}"`);
             execSync('git push');
 
-            core.info(`Successfully released version ${newVersion}`);
+            core.info(`Successfully pushed version increment to ${newVersion}`);
 
         } catch (error) {
-            throw new Error(`Release failed: ${error.message}`);
+            throw new Error(`Version increment failed: ${error.message}`);
         }
     }
 }
